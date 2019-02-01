@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ *
  * Upgrade scripts for course format "event"
  *
- * @package    format_event
- * @copyright  2017 Marina Glancy
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   format_event
+ * @copyright emeneo {@link http://emeneo.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -37,26 +38,8 @@ function xmldb_format_event_upgrade($oldversion) {
 
     if ($oldversion < 2017020200) {
 
-        // Remove 'numsections' option and hide or delete orphaned sections.
-        format_event_upgrade_remove_numsections();
-
-        upgrade_plugin_savepoint(true, 2017020200, 'format', 'event');
-    }
-
-    // Automatically generated Moodle v3.3.0 release upgrade line.
-    // Put any upgrade step following this.
-
-    // Automatically generated Moodle v3.4.0 release upgrade line.
-    // Put any upgrade step following this.
-
-    if ($oldversion < 2018030900) {
-
-        // During upgrade to Moodle 3.3 it could happen that general section (section 0) became 'invisible'.
-        // It should always be visible.
-        $DB->execute("UPDATE {course_sections} SET visible=1 WHERE visible=0 AND section=0 AND course IN
-        (SELECT id FROM {course} WHERE format=?)", ['event']);
-
-        upgrade_plugin_savepoint(true, 2018030900, 'format', 'event');
+        // Version no above is just an example. Actions go in here.
+ 
     }
 
     return true;
