@@ -23,7 +23,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+//defined('MOODLE_INTERNA L') || die();
 
 /**
  * Upgrade script for format_event
@@ -31,16 +31,17 @@ defined('MOODLE_INTERNAL') || die();
  * @param int $oldversion the version we are upgrading from
  * @return bool result
  */
-function xmldb_format_event_upgrade($oldversion) {
-    global $CFG, $DB;
 
-    require_once($CFG->dirroot . '/course/format/event/db/upgradelib.php');
+// function xmldb_format_event_upgrade($oldversion) {
+ //   global $CFG, $DB;
 
-    if ($oldversion < 2017020200) {
+   // require_once($CFG->dirroot . '/course/format/event/db/upgradelib.php');
+
+   // if ($oldversion < 2017020200) {
 
         // Version no above is just an example. Actions go in here.
  
-    }
+  //  }
 
-    return true;
-}
+ //   return true;
+//}
