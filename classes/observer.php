@@ -43,4 +43,31 @@ class format_event_observer {
 
         
     }
+
+    public static function course_created(\core\event\course_created $event) {
+        global $CFG,$DB;
+        
+        require_once($CFG->dirroot.'/course/lib.php');
+        require_once($CFG->dirroot.'/calendar/lib.php');
+
+        //echo "<pre>";print_r($event);exit;
+
+        //$cur_event = $DB->get_record('event',array('id'=>$event->objectid));
+
+        $course = $DB->get_record('course',array('id'=>$event->courseid));
+
+        $params = array("name" => $course->fullname,
+                        "timestart" => $course->startdate,
+                        "eventtype" => "course",
+                        "courseid" => $course->id,
+                        "description" => $course->summary,
+                        "timedurationuntil" => $course->enddate);
+        $duration = $course->enddate - $course->startdate;
+        $events = array(array('name' => $course->fullname, 'courseid' => $course->id, "timestart" => $course->startdate, "timeduration" => $duration, 'eventtype' => 'course', 'description'=>$course->summary , 'repeats' => 0),);
+
+        $eventsret = core_calendar_external::create_calendar_events($events);
+        $eventsret = external_api::clean_returnvalue(core_calendar_external::create_calendar_events_returns(), $eventsret);
+
+        //echo "<pre>";print_r($course);exit;
+    }
 }

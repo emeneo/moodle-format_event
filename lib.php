@@ -30,6 +30,7 @@ require_once($CFG->dirroot. '/course/format/lib.php');
  *
  * @package    format_event
  * @copyright  2012 Marina Glancy
+ * @copyright  2019 emeneo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_event extends format_base {
@@ -327,10 +328,13 @@ class format_event extends format_base {
         global $CFG;
         require_once($CFG->dirroot.'/calendar/externallib.php');
         
+        if(!$data['id']){
+            return;
+        }
+        
         $courseids = array($data['id']);
         $cur_course = get_course($data['id']);
-        //echo "<pre>";print_r($cur_course);exit;
-
+        
         $paramevents = array ('courseids' => $courseids);
         $listevents = core_calendar_external::get_calendar_events($paramevents);
         
@@ -355,7 +359,7 @@ class format_event extends format_base {
 
         $eventsret = core_calendar_external::create_calendar_events($events);
         $eventsret = external_api::clean_returnvalue(core_calendar_external::create_calendar_events_returns(), $eventsret);
-        
+
         return $this->update_format_options($data);
     }
 

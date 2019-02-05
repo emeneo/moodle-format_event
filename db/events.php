@@ -10,4 +10,9 @@ $observers = array(
         'eventname' => '\core\event\calendar_event_deleted',
         'callback'  => 'format_event_observer::course_deleted',
     ),
+
+    array(
+    	'eventname' => '\core\event\course_created',
+        'callback'  => 'format_event_observer::course_created',
+    )
 );
