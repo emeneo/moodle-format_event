@@ -1,6 +1,10 @@
 Course format "Event"
 =====================
 
+Credits:
+--------
+The initial version of this plugin is based on the Topics course foram!
+
 Description:
 ------------
 The course format "Event" is intended to be used for short training events.
