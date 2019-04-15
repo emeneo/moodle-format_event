@@ -224,6 +224,15 @@ class format_event extends format_base {
      */
     public function course_format_options($foreditform = false) {
         static $courseformatoptions = false;
+
+        $config = get_config('format_event');
+        $locations = $config->locations;
+        $arr_locations = explode(";", $locations);
+        $sel_locations = array();
+        foreach ($arr_locations as $location) {
+            $sel_locations[$location] = $location;
+        }
+
         if ($courseformatoptions === false) {
             $courseconfig = get_config('moodlecourse');
             $courseformatoptions = array(
@@ -234,6 +243,10 @@ class format_event extends format_base {
                 'coursedisplay' => array(
                     'default' => $courseconfig->coursedisplay,
                     'type' => PARAM_INT,
+                ),
+                'location' => array(
+                    'default' => '',
+                    'type' => PARAM_TEXT,
                 ),
             );
         }
@@ -262,8 +275,17 @@ class format_event extends format_base {
                     ),
                     'help' => 'coursedisplay',
                     'help_component' => 'moodle',
-                )
+                ),
+                'location' => array(
+                    'label' => new lang_string('location', 'format_event'),
+                    'help' => 'location',
+                    'help_component' => 'format_event',
+                    'element_type' => 'select',
+                    'element_attributes' => array($sel_locations),
+                ),
             );
+            //echo "<pre>";
+            //print_r($courseformatoptions);print_r($courseformatoptionsedit);exit;
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
         return $courseformatoptions;
@@ -281,7 +303,6 @@ class format_event extends format_base {
     public function create_edit_form_elements(&$mform, $forsection = false) {
         global $COURSE;
         $elements = parent::create_edit_form_elements($mform, $forsection);
-
         if (!$forsection && (empty($COURSE->id) || $COURSE->id == SITEID)) {
             // Add "numsections" element to the create course form - it will force new course to be prepopulated
             // with empty sections.
@@ -325,7 +346,18 @@ class format_event extends format_base {
             }
         }
 
-        global $CFG;
+        global $CFG,$DB;
+        /*
+        $upData = new stdClass();
+        $upData->id = $data['id'];
+        $upData->summary = $data['summary'];
+        $upData->summary = str_replace('[location]', $data['location'], $upData->summary);
+        $upData->summary = str_replace('[startdate]', date("Y-m-d",$data['startdate']), $upData->summary);
+        $upData->summary = str_replace('[starttime]', date("H:i:s",$data['startdate']), $upData->summary);
+        $upData->summary = str_replace('[enddate]', date("Y-m-d",$data['enddate']), $upData->summary);
+        $upData->summary = str_replace('[endtime]', date("H:i:s",$data['enddate']), $upData->summary);
+        $DB->update_record('course', $upData);
+        */
         require_once($CFG->dirroot.'/calendar/externallib.php');
         
         if(!$data['id']){
@@ -334,7 +366,6 @@ class format_event extends format_base {
         
         $courseids = array($data['id']);
         $cur_course = get_course($data['id']);
-        
         $paramevents = array ('courseids' => $courseids);
         $listevents = core_calendar_external::get_calendar_events($paramevents);
         

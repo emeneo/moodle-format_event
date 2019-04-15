@@ -15,17 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
  *
- * @package   format_event
- * @copyright emeneo {@link http://emeneo.com}
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2019032700;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2017110800;        // Requires this Moodle version.
-$plugin->component = 'format_event';    // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'Event course format Version 3.5-d';
+if ($ADMIN->fulltree) {
+	$settings->add(new admin_setting_configtextarea('format_event/locations',
+         get_string('location', 'format_event'), 
+         get_string('location_desc', 'format_event'),''));
+}

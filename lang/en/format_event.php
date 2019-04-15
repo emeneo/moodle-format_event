@@ -37,3 +37,5 @@ $string['page-course-view-event-x'] = 'Any course page in event format';
 $string['hidefromothers'] = 'Hide topic';
 $string['showfromothers'] = 'Show topic';
 $string['privacy:metadata'] = 'The event format plugin does not store any personal data.';
+$string['location'] = 'Location';
+$string['location_desc'] = 'Please use ";" for separation';
